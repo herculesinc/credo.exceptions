@@ -1,6 +1,6 @@
 {
   "name": "@credo/exceptions",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Exceptions and validators for Credo application",
   "main": "index.js",
   "repository": {

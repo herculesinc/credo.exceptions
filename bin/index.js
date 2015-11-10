@@ -106,6 +106,14 @@ exports.validate = {
     authorized: (condition, message) => {
         if (!condition)
             throw new UnauthorizedException(message);
+    },
+    content: (condition, message) => {
+        if (!condition)
+            throw new UnsupportedContentException(message);
+    },
+    accepts: (condition, message) => {
+        if (!condition)
+            throw new NotAcceptableException(message);
     }
 };
 //# sourceMappingURL=index.js.map

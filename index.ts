@@ -113,5 +113,11 @@ export var validate = {
     },
     authorized: (condition: any, message: string) => {
         if (!condition) throw new UnauthorizedException(message);
+    },
+    content: (condition: any, message: string) => {
+        if (!condition) throw new UnsupportedContentException(message);
+    },
+    accepts: (condition: any, message: string) => {
+        if (!condition) throw new NotAcceptableException(message);
     }
 };
