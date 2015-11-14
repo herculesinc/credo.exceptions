@@ -83,8 +83,8 @@ export class InternalServerError extends Exception {
     constructor(cause: Error, isCritical?: boolean);
     constructor(message: string, isCritical?: boolean, cause?: Error);
     constructor(messageOrCause: string | Error, isCritical?: boolean, cause?: Error) {
-        if (typeof messageOrCause === 'string'){
-			super(messageOrCause, 500, isCritical);
+        if (typeof messageOrCause === 'string') {
+			super(cause ? `${messageOrCause}: ${cause.message}` : messageOrCause, 500, isCritical);
 			this.cause = cause;
 		}
 		else {

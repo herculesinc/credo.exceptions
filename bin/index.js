@@ -74,7 +74,7 @@ exports.TooManyRequestsException = TooManyRequestsException;
 class InternalServerError extends Exception {
     constructor(messageOrCause, isCritical, cause) {
         if (typeof messageOrCause === 'string') {
-            super(messageOrCause, 500, isCritical);
+            super(cause ? `${messageOrCause}: ${cause.message}` : messageOrCause, 500, isCritical);
             this.cause = cause;
         }
         else {
