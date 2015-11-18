@@ -94,26 +94,29 @@ class ServiceUnavailableError extends Exception {
 exports.ServiceUnavailableError = ServiceUnavailableError;
 // VALIDATORS
 // ================================================================================================
-exports.validate = {
-    request: (condition, message) => {
-        if (!condition)
-            throw new BadRequestException(message);
-    },
-    exists: (condition, message) => {
-        if (!condition)
-            throw new NotFoundException(message);
-    },
-    authorized: (condition, message) => {
-        if (!condition)
-            throw new UnauthorizedException(message);
-    },
-    content: (condition, message) => {
-        if (!condition)
-            throw new UnsupportedContentException(message);
-    },
-    accepts: (condition, message) => {
-        if (!condition)
-            throw new NotAcceptableException(message);
-    }
+exports.validate = function (condition, message, isCritical) {
+    isCritical = typeof isCritical === 'boolean' ? isCritical : false;
+    if (!condition)
+        throw new InternalServerError(message, isCritical);
+};
+exports.validate.request = function (condition, message) {
+    if (!condition)
+        throw new BadRequestException(message);
+};
+exports.validate.exists = function (condition, message) {
+    if (!condition)
+        throw new NotFoundException(message);
+};
+exports.validate.authorized = function (condition, message) {
+    if (!condition)
+        throw new UnauthorizedException(message);
+};
+exports.validate.content = function (condition, message) {
+    if (!condition)
+        throw new UnsupportedContentException(message);
+};
+exports.validate.accepts = function (condition, message) {
+    if (!condition)
+        throw new NotAcceptableException(message);
 };
 //# sourceMappingURL=index.js.map

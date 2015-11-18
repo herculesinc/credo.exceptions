@@ -1,4 +1,14 @@
 'use strict';
+// INTERFACES
+// ================================================================================================
+export interface Validator {
+    (condition: any, message: string): void;
+    request?    : (condition: any, message: string) => void;
+    exists?     : (condition: any, message: string) => void;
+    authorized? : (condition: any, message: string) => void;
+    content?    : (condition: any, message: string) => void;
+    accepts?    : (condition: any, message: string) => void;
+}
 
 // BASE EXCEPTION DEFINITION
 // ================================================================================================
@@ -104,20 +114,27 @@ export class ServiceUnavailableError extends Exception {
 
 // VALIDATORS
 // ================================================================================================
-export var validate = {
-    request: (condition: any, message: string) => {
-        if (!condition) throw new BadRequestException(message);
-    },
-    exists: (condition: any, message: string) => {
-        if (!condition) throw new NotFoundException(message);
-    },
-    authorized: (condition: any, message: string) => {
-        if (!condition) throw new UnauthorizedException(message);
-    },
-    content: (condition: any, message: string) => {
-        if (!condition) throw new UnsupportedContentException(message);
-    },
-    accepts: (condition: any, message: string) => {
-        if (!condition) throw new NotAcceptableException(message);
-    }
-};
+export var validate: Validator = function(condition: any, message: string, isCritical?: boolean) {
+    isCritical = typeof isCritical === 'boolean' ? isCritical : false ;
+    if (!condition) throw new InternalServerError(message, isCritical);
+} 
+
+validate.request = function (condition: any, message: string) {
+    if (!condition) throw new BadRequestException(message);
+}
+
+validate.exists = function (condition: any, message: string) {
+    if (!condition) throw new NotFoundException(message);
+}
+
+validate.authorized = function (condition: any, message: string) {
+    if (!condition) throw new UnauthorizedException(message);
+}
+    
+validate.content = function (condition: any, message: string) {
+    if (!condition) throw new UnsupportedContentException(message);
+}
+    
+validate.accepts = function (condition: any, message: string) {
+    if (!condition) throw new NotAcceptableException(message);
+}
