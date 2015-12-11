@@ -8,6 +8,7 @@ export interface Validator {
     authorized? : (condition: any, message: string) => void;
     content?    : (condition: any, message: string) => void;
     accepts?    : (condition: any, message: string) => void;
+    allowed?    : (condition: any, message: string) => void;
 }
 
 // BASE EXCEPTION DEFINITION
@@ -137,4 +138,8 @@ validate.content = function (condition: any, message: string) {
     
 validate.accepts = function (condition: any, message: string) {
     if (!condition) throw new NotAcceptableException(message);
+}
+
+validate.allowed = function (condition: any, message: string) {
+    if (!condition) throw new ForbiddenException(message);
 }

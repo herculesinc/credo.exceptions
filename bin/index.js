@@ -119,4 +119,8 @@ exports.validate.accepts = function (condition, message) {
     if (!condition)
         throw new NotAcceptableException(message);
 };
+exports.validate.allowed = function (condition, message) {
+    if (!condition)
+        throw new ForbiddenException(message);
+};
 //# sourceMappingURL=index.js.map
